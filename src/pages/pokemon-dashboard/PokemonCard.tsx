@@ -3,7 +3,7 @@ import { PokemonDetails, PokemonOverview } from "./index";
 import { fetchPokemonByName } from "../../api/pokemon-api";
 
 import styles from "./PokemonCard.module.css";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export interface PokemonCardProps {
   pokemon: PokemonOverview;

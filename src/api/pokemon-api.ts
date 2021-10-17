@@ -30,6 +30,7 @@ function toPokemonDescription(pokemonSpeciesResponse: any): PokemonDescription {
   return {
     descriptionLines: pokemonSpeciesResponse.flavor_text_entries
       .filter((it: any) => it.language.name === "en")
+      // eslint-disable-next-line no-control-regex
       .map((it: any) => it.flavor_text.replace(/[^\x00-\x7F]/g, "")),
   };
 }

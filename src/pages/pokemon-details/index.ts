@@ -20,7 +20,6 @@ export function toPokemonTypeBadge(pokemonType: PokemonType) {
     case PokemonType.GROUND:
     case PokemonType.BUG:
     case PokemonType.FIGHTING:
-    case PokemonType.GROUND:
       return "bg-secondary";
     case PokemonType.FAIRY:
       return "bg-warning";
