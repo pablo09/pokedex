@@ -16,7 +16,7 @@ export const PokemonCard = (props: PokemonCardProps) => {
 
   React.useEffect(() => {
     fetchPokemon(pokemon.name).then(setPokemonDetails);
-  }, []);
+  }, [pokemon]);
 
   if (pokemonDetails == null) {
     return <></>;
