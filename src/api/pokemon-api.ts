@@ -55,12 +55,10 @@ function toPokemonDetails(pokemonDetailsResponse: any): PokemonDetails {
   };
 }
 
-const pokemonIdPattern = /^(.*)\/pokemon\/([0-9]+)\/$/g;
-
 function findPokemonId(url: string) {
-  const matchingResult = new RegExp(pokemonIdPattern).exec(url);
+  const matchingResult = new RegExp(/^(.*)\/pokemon\/([0-9]+)\/$/g).exec(url);
   if (!!matchingResult && matchingResult.length > 2) {
     return matchingResult[2];
   }
-  return "";
+  return null;
 }
