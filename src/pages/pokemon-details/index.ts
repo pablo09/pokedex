@@ -20,12 +20,12 @@ export function toPokemonTypeBadge(pokemonType: PokemonType) {
     case PokemonType.GROUND:
     case PokemonType.BUG:
     case PokemonType.FIGHTING:
-      return "bg-secondary";
+      return "bg-dark";
     case PokemonType.FAIRY:
       return "bg-warning";
     case PokemonType.GRASS:
       return "bg-success";
     default:
-      return "bg-light";
+      return "bg-secondary";
   }
 }
