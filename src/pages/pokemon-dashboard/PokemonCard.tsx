@@ -30,7 +30,7 @@ export const PokemonCard = (props: PokemonCardProps) => {
             className=""
             src={pokemonDetails.imageUrl}
             height="120 px"
-            alt="Card image cap"
+            alt=""
           />
           <div className="card-body">
             <h5 className="card-title">{pokemon.name}</h5>
