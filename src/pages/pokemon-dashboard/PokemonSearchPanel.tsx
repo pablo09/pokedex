@@ -11,7 +11,7 @@ export const PokemonSearchPanel = (props: PokemonSearchPanelProps) => {
 
   function handleSearchClick(e: React.SyntheticEvent) {
     e.preventDefault();
-    onPokemonSearchClick(searchText);
+    onPokemonSearchClick(searchText.toLowerCase());
   }
 
   return (

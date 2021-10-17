@@ -3,6 +3,7 @@ import "./App.css";
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import { PokemonDashboardPage } from "./pages/pokemon-dashboard/PokemonDashboardPage";
 import { NotFoundPage } from "./pages/NotFoundPage";
+import { PokemonDetailsPage } from "./pages/pokemon-details/PokemonDetailsPage";
 
 function App() {
   return (
@@ -16,6 +17,9 @@ function App() {
             </Route>
             <Route exact path="/dashboard">
               <PokemonDashboardPage />
+            </Route>
+            <Route exact path="/pokemon-details/:pokemonId">
+              <PokemonDetailsPage />
             </Route>
             <Route>
               <NotFoundPage />
