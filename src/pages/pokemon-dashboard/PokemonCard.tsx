@@ -1,6 +1,6 @@
 import React from "react";
 import { PokemonDetails, PokemonOverview } from "./index";
-import { fetchPokemonByName } from "../../api/pokemon-api";
+import { fetchPokemonById } from "../../api/pokemon-api";
 
 import styles from "./PokemonCard.module.css";
 import { Link } from "react-router-dom";
@@ -16,7 +16,7 @@ export const PokemonCard = (props: PokemonCardProps) => {
     React.useState<PokemonDetails | null>(null);
 
   React.useEffect(() => {
-    fetchPokemonByName(pokemon.name).then(setPokemonDetails);
+    fetchPokemonById(pokemon.name).then(setPokemonDetails);
   }, [pokemon]);
 
   if (pokemonDetails == null) {

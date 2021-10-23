@@ -2,10 +2,13 @@ import React from "react";
 import { useRouteMatch } from "react-router-dom";
 import { PokemonDetails } from "../pokemon-dashboard";
 import {
-  fetchPokemonByName,
+  addPokemonToCollection,
+  fetchPokemonById,
   fetchPokemonDescriptions,
 } from "../../api/pokemon-api";
 import { PokemonDescription, toPokemonTypeBadge } from "./index";
+import { SecurityContext } from "../../context/security-context";
+import { toast } from "react-toastify";
 
 interface RouteParams {
   pokemonId: string;
@@ -20,8 +23,10 @@ export const PokemonDetailsPage = () => {
   const [pokemonDescription, setPokemonDescription] =
     React.useState<PokemonDescription | null>(null);
 
+  const { loggedUser, isAuthenticated } = React.useContext(SecurityContext);
+
   React.useEffect(() => {
-    fetchPokemonByName(pokemonId).then(setPokemonDetails);
+    fetchPokemonById(pokemonId).then(setPokemonDetails);
     fetchPokemonDescriptions(pokemonId).then(setPokemonDescription);
   }, [pokemonId]);
 
@@ -29,17 +34,35 @@ export const PokemonDetailsPage = () => {
     return <></>;
   }
 
+  function addToCollection() {
+    if (loggedUser) {
+      addPokemonToCollection(loggedUser, pokemonId).then(() =>
+        toast.success("Pokemon added to collection!")
+      );
+    }
+  }
+
   return (
     <div className="row">
       <div className="col-md-7">
         <img
           className="img-fluid"
-          src={pokemonDetails!.officialArtworkImageUrl}
+          src={pokemonDetails.officialArtworkImageUrl}
           alt=""
         />
       </div>
       <div className="col-md-5">
-        <h3 className="my-3">{pokemonDetails!.name}</h3>
+        <div className="d-flex align-items-baseline justify-content-between">
+          <h3 className="my-3">{pokemonDetails.name}</h3>
+          {isAuthenticated() && (
+            <button
+              className="btn btn-outline-dark btn-sm"
+              onClick={addToCollection}
+            >
+              Add to collection
+            </button>
+          )}
+        </div>
         <span
           className={["badge", toPokemonTypeBadge(pokemonDetails.type)].join(
             " "

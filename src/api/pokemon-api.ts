@@ -1,5 +1,7 @@
 import { PokemonDetails, PokemonOverview } from "../pages/pokemon-dashboard";
 import { PokemonDescription } from "../pages/pokemon-details";
+import { LoggedUser } from "../context/security-context";
+import { PokemonCollection } from "../pages/my-collection";
 
 export function fetchPokemons(
   offset: number,
@@ -12,8 +14,8 @@ export function fetchPokemons(
     .then(toPokemonList);
 }
 
-export function fetchPokemonByName(name: string): Promise<PokemonDetails> {
-  return fetch(`https://pokeapi.co/api/v2/pokemon/${name}`)
+export function fetchPokemonById(id: string): Promise<PokemonDetails> {
+  return fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
     .then((response) => response.json())
     .then(toPokemonDetails);
 }
@@ -26,12 +28,49 @@ export function fetchPokemonDescriptions(
     .then(toPokemonDescription);
 }
 
+export function addPokemonToCollection(
+  user: LoggedUser,
+  pokemonId: string
+): Promise<any> {
+  const myCollectionStorageKey = `user-${user.username}`;
+  const collection = window.localStorage.getItem(myCollectionStorageKey);
+  if (!collection) {
+    window.localStorage.setItem(
+      myCollectionStorageKey,
+      JSON.stringify([pokemonId])
+    );
+  } else {
+    const collectionObject = JSON.parse(collection);
+    collectionObject.push(pokemonId);
+    window.localStorage.setItem(
+      myCollectionStorageKey,
+      JSON.stringify(collectionObject)
+    );
+  }
+
+  return new Promise<any>((resolve) => resolve({}));
+}
+
+export function fetchMyCollection(
+  user: LoggedUser
+): Promise<PokemonCollection> {
+  const myCollectionStorageKey = `user-${user.username}`;
+  const collection = window.localStorage.getItem(myCollectionStorageKey);
+  if (!collection) {
+    return new Promise((resolve) => resolve({ ids: [] }));
+  }
+
+  return new Promise((resolve) =>
+    resolve({ ids: JSON.parse(collection) })
+  );
+}
+
 function toPokemonDescription(pokemonSpeciesResponse: any): PokemonDescription {
   return {
     descriptionLines: pokemonSpeciesResponse.flavor_text_entries
       .filter((it: any) => it.language.name === "en")
       // eslint-disable-next-line no-control-regex
-      .map((it: any) => it.flavor_text.replace(/[^\x00-\x7F]/g, "")),
+      .map((it: any) => decodeURIComponent(it.flavor_text)),
   };
 }
 

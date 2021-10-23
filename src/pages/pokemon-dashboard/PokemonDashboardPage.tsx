@@ -1,6 +1,6 @@
 import React from "react";
 import { PokemonOverview } from "./index";
-import { fetchPokemonByName, fetchPokemons } from "../../api/pokemon-api";
+import { fetchPokemonById, fetchPokemons } from "../../api/pokemon-api";
 import { PokemonCard } from "./PokemonCard";
 import { PokemonSearchPanel } from "./PokemonSearchPanel";
 import { OverlaySpinner } from "../../components/overlay-spinner/OverlaySpinner";
@@ -35,7 +35,7 @@ export const PokemonDashboardPage = () => {
         .catch(() => setPokemons([]))
         .finally(() => setLoading(false));
     } else {
-      fetchPokemonByName(name)
+      fetchPokemonById(name)
         .then((pokemon) =>
           setPokemons([{ name: pokemon.name, id: pokemon.id }])
         )
