@@ -47,7 +47,7 @@ const NavItem = (props: NavItemProps) => {
   const { label, to, onClick } = props;
 
   return (
-    <li className="nav-item">
+    <li className="nav-item me-2">
       <Link className="nav-link active" to={to} onClick={onClick}>
         {label}
       </Link>

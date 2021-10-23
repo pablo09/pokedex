@@ -1,6 +1,6 @@
-import React, { Component, useContext } from "react";
+import React, { Component } from "react";
 import { Redirect, Route } from "react-router-dom";
-import {getLoggedUserFromLocalSession, SecurityContext} from "../context/security-context";
+import { getLoggedUserFromLocalSession } from "../context/security-context";
 
 export const ProtectedRoute = ({ component, ...rest }: any) => {
   if (!getLoggedUserFromLocalSession()) {

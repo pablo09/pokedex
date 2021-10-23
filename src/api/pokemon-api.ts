@@ -51,6 +51,24 @@ export function addPokemonToCollection(
   return new Promise<any>((resolve) => resolve({}));
 }
 
+export function removePokemonFromCollection(
+  user: LoggedUser,
+  pokemonId: string
+): Promise<any> {
+  const myCollectionStorageKey = `user-${user.username}`;
+  const collection = window.localStorage.getItem(myCollectionStorageKey);
+  if (!collection) {
+    return new Promise((resolve) => resolve({}));
+  }
+
+  const collectionObject: string[] = JSON.parse(collection);
+  window.localStorage.setItem(
+    myCollectionStorageKey,
+    JSON.stringify(collectionObject.filter((it) => it !== pokemonId.toString()))
+  );
+  return new Promise((resolve) => resolve({}));
+}
+
 export function fetchMyCollection(
   user: LoggedUser
 ): Promise<PokemonCollection> {
@@ -60,9 +78,7 @@ export function fetchMyCollection(
     return new Promise((resolve) => resolve({ ids: [] }));
   }
 
-  return new Promise((resolve) =>
-    resolve({ ids: JSON.parse(collection) })
-  );
+  return new Promise((resolve) => resolve({ ids: JSON.parse(collection) }));
 }
 
 function toPokemonDescription(pokemonSpeciesResponse: any): PokemonDescription {
