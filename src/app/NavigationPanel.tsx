@@ -6,7 +6,7 @@ export const NavigationPanel = () => {
   const { loggedUser, onLogout } = React.useContext(SecurityContext);
   return (
     <header>
-      <nav className="navbar navbar-expand-md navbar-light fixed-top bg-light">
+      <nav className="navbar navbar-expand-sm navbar-light fixed-top bg-light">
         <div className="container-fluid">
           <Link className="navbar-brand" to="/">
             <img
@@ -18,8 +18,12 @@ export const NavigationPanel = () => {
             />
             Pokedex
           </Link>
+          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01"
+                  aria-controls="navbarPokedex" aria-expanded="false" aria-label="Toggle navigation">
+            <span className="navbar-toggler-icon"></span>
+          </button>
         </div>
-        <div className="collapse navbar-collapse" id="navbarText">
+        <div className="collapse navbar-collapse" id="navbarPokedex">
           <ul className="navbar-nav mb-2 mb-lg-0 me-5 text-nowrap text-decoration-none">
             {loggedUser ? (
               <>

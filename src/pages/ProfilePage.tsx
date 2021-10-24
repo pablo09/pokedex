@@ -20,7 +20,7 @@ export const ProfilePage = () => {
   }
 
   return (
-    <div>
+    <div className="row">
       <h4>{loggedUser.username}</h4>
       <p>Number of pokemons: {collectionSize}</p>
     </div>

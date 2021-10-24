@@ -24,7 +24,7 @@ export const PokemonCard = (props: PokemonCardProps) => {
   }
 
   return (
-    <div className="col-md-2 mt-4">
+    <div className="col-sm-2 mt-4">
       <div className={styles.pokemonCard}>
         <div className="m-4">
           <Link to={`/pokemon-details/${pokemon.id}`}>

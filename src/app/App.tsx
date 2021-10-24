@@ -1,7 +1,8 @@
 import React from "react";
 import "./App.css";
 
-import '@fortawesome/fontawesome-free/js/all.js';
+import "@fortawesome/fontawesome-free/js/all.js";
+import "bootstrap/dist/js/bootstrap.bundle.js";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AppRoutes } from "./AppRoutes";
