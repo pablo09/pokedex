@@ -18,7 +18,7 @@ export const NavigationPanel = () => {
             />
             Pokedex
           </Link>
-          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01"
+          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarPokedex"
                   aria-controls="navbarPokedex" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
           </button>
