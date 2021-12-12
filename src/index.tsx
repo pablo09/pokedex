@@ -4,6 +4,9 @@ import './index.css';
 import App from './app/App';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.css';
+import makeServer from "./server";
+
+makeServer();
 
 ReactDOM.render(
   <React.StrictMode>

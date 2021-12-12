@@ -7,15 +7,20 @@ export const LoginPage = () => {
   const { onLogin } = React.useContext(SecurityContext);
   const [username, setUsername] = React.useState<string>("");
   const [password, setPassword] = React.useState<string>("");
-
+  const [error, setError] = React.useState<boolean>(false);
   const history = useHistory();
 
   function handleSubmit(event: React.SyntheticEvent) {
     event.preventDefault();
-    login(username, password).then((loggedUser) => {
-      onLogin(loggedUser);
-      history.push("/");
-    });
+    login(username, password)
+      .then((loggedUser) => {
+        onLogin(loggedUser);
+        setError(false);
+        history.push("/");
+      })
+      .catch((error) => {
+        setError(true);
+      });
   }
 
   return (
@@ -45,9 +50,14 @@ export const LoginPage = () => {
               />
             </div>
             <div className="col-12">
-              <button type="submit" className="btn btn-dark float-end">
-                Login
-              </button>
+              <div className="row">
+                <button type="submit" className="btn btn-dark float-end">
+                  Login
+                </button>
+                {error && (
+                  <div className="mt-4 alert alert-danger">Login attempt failed</div>
+                )}
+              </div>
             </div>
           </form>
         </div>

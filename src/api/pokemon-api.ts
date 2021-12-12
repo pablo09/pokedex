@@ -2,6 +2,7 @@ import { PokemonDetails, PokemonOverview } from "../pages/pokemon-dashboard";
 import { PokemonDescription } from "../pages/pokemon-details";
 import { LoggedUser } from "../context/security-context";
 import { PokemonCollection } from "../pages/my-collection";
+import { apiErrorHandler } from "./index";
 
 export function fetchPokemons(
   offset: number,
@@ -32,53 +33,34 @@ export function addPokemonToCollection(
   user: LoggedUser,
   pokemonId: string
 ): Promise<any> {
-  const myCollectionStorageKey = `user-${user.username}`;
-  const collection = window.localStorage.getItem(myCollectionStorageKey);
-  if (!collection) {
-    window.localStorage.setItem(
-      myCollectionStorageKey,
-      JSON.stringify([pokemonId])
-    );
-  } else {
-    const collectionObject = JSON.parse(collection);
-    collectionObject.push(pokemonId);
-    window.localStorage.setItem(
-      myCollectionStorageKey,
-      JSON.stringify(collectionObject)
-    );
-  }
-
-  return new Promise<any>((resolve) => resolve({}));
+  return fetch(`/api/users/${user.username}/pokemons`, {
+    method: "PATCH",
+    body: JSON.stringify({ pokemonId }),
+  })
+    .then(apiErrorHandler)
+    .then((response) => response.json());
 }
 
 export function removePokemonFromCollection(
   user: LoggedUser,
   pokemonId: string
 ): Promise<any> {
-  const myCollectionStorageKey = `user-${user.username}`;
-  const collection = window.localStorage.getItem(myCollectionStorageKey);
-  if (!collection) {
-    return new Promise((resolve) => resolve({}));
-  }
-
-  const collectionObject: string[] = JSON.parse(collection);
-  window.localStorage.setItem(
-    myCollectionStorageKey,
-    JSON.stringify(collectionObject.filter((it) => it !== pokemonId.toString()))
-  );
-  return new Promise((resolve) => resolve({}));
+  return fetch(`/api/users/${user.username}/pokemons`, {
+    method: "DELETE",
+    body: JSON.stringify({
+      pokemonId,
+    }),
+  });
 }
 
 export function fetchMyCollection(
   user: LoggedUser
 ): Promise<PokemonCollection> {
-  const myCollectionStorageKey = `user-${user.username}`;
-  const collection = window.localStorage.getItem(myCollectionStorageKey);
-  if (!collection) {
-    return new Promise((resolve) => resolve({ ids: [] }));
-  }
-
-  return new Promise((resolve) => resolve({ ids: JSON.parse(collection) }));
+  return fetch(`/api/users/${user.username}/pokemons`)
+    .then((response) => response.json())
+    .then((it) => ({
+      ids: it.pokemonIds,
+    }));
 }
 
 function toPokemonDescription(pokemonSpeciesResponse: any): PokemonDescription {

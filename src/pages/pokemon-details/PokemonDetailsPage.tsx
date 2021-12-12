@@ -36,9 +36,9 @@ export const PokemonDetailsPage = () => {
 
   function addToCollection() {
     if (loggedUser) {
-      addPokemonToCollection(loggedUser, pokemonId).then(() =>
-        toast.success("Pokemon added to collection!")
-      );
+      addPokemonToCollection(loggedUser, pokemonId)
+        .then(() => toast.success("Pokemon added to collection!"))
+        .catch((error) => toast.error(error));
     }
   }
 
